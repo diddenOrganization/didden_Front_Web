@@ -1,4 +1,4 @@
-import { API_KEY } from '@/app/(home)/page';
+const API_KEY = 'c62ed3cccb5e58994a64922b82ca8880';
 
 const getMovieInfo = async (id: string) => {
   return await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`).then((reponse) => reponse.json());
