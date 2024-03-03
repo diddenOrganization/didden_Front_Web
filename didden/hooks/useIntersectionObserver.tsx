@@ -1,37 +1,46 @@
-// import React from 'react';
+import React from 'react';
 
-// export default function useIntersectionObserver({
-//   root,
-//   target,
-//   onIntersect,
-//   threshold = 1.0,
-//   rootMargin = '0px',
-//   enabled = true,
-// }) {
-//   React.useEffect(() => {
-//     if (!enabled) {
-//       return;
-//     }
+interface useIntersectionObserverProps {
+  root?: any;
+  rootMargin?: string;
+  threshold?: number;
+  target: any;
+  onIntersect: any;
+  enabled: boolean;
+}
 
-//     const observer = new IntersectionObserver(
-//       (entries) => entries.forEach((entry) => entry.isIntersecting && onIntersect()),
-//       {
-//         root: root && root.current,
-//         rootMargin,
-//         threshold,
-//       },
-//     );
+export default function useIntersectionObserver({
+  root,
+  target,
+  onIntersect,
+  threshold = 1.0,
+  rootMargin = '0px',
+  enabled = true,
+}: useIntersectionObserverProps) {
+  React.useEffect(() => {
+    if (!enabled) {
+      return;
+    }
 
-//     const el = target && target.current;
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((entry) => entry.isIntersecting && onIntersect()),
+      {
+        root: root && root.current,
+        rootMargin,
+        threshold,
+      },
+    );
 
-//     if (!el) {
-//       return;
-//     }
+    const el = target && target.current;
 
-//     observer.observe(el);
+    if (!el) {
+      return;
+    }
 
-//     return () => {
-//       observer.unobserve(el);
-//     };
-//   }, [target, enabled, root, threshold, rootMargin, onIntersect]);
-// }
+    observer.observe(el);
+
+    return () => {
+      observer.unobserve(el);
+    };
+  }, [target, enabled, root, threshold, rootMargin, onIntersect]);
+}
