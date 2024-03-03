@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer compoenents {
+  /* display: felx; justify-content: center; align-items: center; */
+  .flexcenter {
+    @apply flex items-center justify-center;
+  }
+  /* margin: 0 auto; */
+  .margincenter {
+    @apply mx-auto my-0;
+  }
+  /* display: felx; flexwrap: wrap; */
+  .flexwrap {
+    @apply flex flex-wrap;
+  }
+}
