@@ -2,9 +2,13 @@ name: deploy
 on:
   push:
     branches: ['master']
+    
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./didden
     steps:
       - uses: actions/checkout@v3.3.0
 
@@ -23,4 +27,6 @@ jobs:
             source ~/.nvm/nvm.sh
             
       - name: server start
-        run: ./server-reboot.sh
+        run: |
+          pwd
+          ./server-reboot.sh
