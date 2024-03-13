@@ -20,4 +20,6 @@ jobs:
             cd ../../app/didden_Front_Web
             sudo git pull
             cd ./didden
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
             ./server-reboot.sh
