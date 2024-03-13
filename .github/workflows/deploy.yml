@@ -25,7 +25,13 @@ jobs:
       
       - run: |
           pwd
-          cd /app/didden_Front_Web/didden
+          cd /
+          pwd
+          cd app
+          pwd
+          cd didden_Front_Web
+          pwd
+          cd didden
           pwd
           npm ci
       - run: |
