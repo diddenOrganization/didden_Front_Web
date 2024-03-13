@@ -18,11 +18,9 @@ jobs:
           script: |
             whoami
             cd ../../app/didden_Front_Web/didden
-      - name: source git pull
-        run: sudo git pull
-
-      - name: npm install
-        run: npm install
-
+            sudo git pull
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            
       - name: server start
         run: ./server-reboot.sh
