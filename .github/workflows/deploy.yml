@@ -1,0 +1,24 @@
+name: deploy
+on:
+  push:
+    branches: ['master']
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.3.0
+
+      - name: execute remote ssh
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DIDDEN_SSH_HOST }}
+          username: ${{ secrets.DIDDEN_SSH_USERNAME }}
+          key: ${{ secrets.DIDDEN_SSH_KEY }}
+          port: ${{ secrets.DIDDEN_SSH_PORT }}
+          script: |
+            whoami
+            cd ../../app/didden_Front_Web
+            sudo git pull origin master
+            cd ./didden
+            ./down-server.sh
+            ./start-server.sh
