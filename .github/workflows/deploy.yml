@@ -22,4 +22,4 @@ jobs:
             cd ./didden
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
-            ./server-reboot.sh
+            ./server-reboot.sh &
