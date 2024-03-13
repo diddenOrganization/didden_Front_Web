@@ -27,4 +27,4 @@ jobs:
           port: ${{ secrets.DIDDEN_SSH_PORT }}
       
       - run: npm ci
-      - run: npm run build --if-present
+      - run: npm run build --if-present &
