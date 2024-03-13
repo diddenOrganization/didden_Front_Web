@@ -8,15 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: "./didden"
+        working-directory: "/app/didden_Front_Web/didden/"
   
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
+#      - name: Use Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: '20.x'
       
       - name: execute
         uses: appleboy/ssh-action@v1.0.3
