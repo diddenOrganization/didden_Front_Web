@@ -6,9 +6,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: "/app/didden_Front_Web/didden/"
   
     steps:
       - uses: actions/checkout@v4
@@ -26,5 +23,9 @@ jobs:
           key: ${{ secrets.DIDDEN_SSH_KEY }}
           port: ${{ secrets.DIDDEN_SSH_PORT }}
       
-      - run: npm ci
+      - run: |
+          pwd
+          cd /
+          pwd
+          npm ci
       - run: npm run build --if-present &
