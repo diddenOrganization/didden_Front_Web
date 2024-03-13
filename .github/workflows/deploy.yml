@@ -22,9 +22,14 @@ jobs:
           username: ${{ secrets.DIDDEN_SSH_USERNAME }}
           key: ${{ secrets.DIDDEN_SSH_KEY }}
           port: ${{ secrets.DIDDEN_SSH_PORT }}
-          run: |
-            cd /
-            ls -al
+          script: |
+            whoami
+            cd /app/didden_Front_Web/didden/
+            sudo git pull
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            npm ci
+            npm run build --if-present &
           
       
       #- run: npm ci
