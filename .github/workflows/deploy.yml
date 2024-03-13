@@ -22,9 +22,10 @@ jobs:
           username: ${{ secrets.DIDDEN_SSH_USERNAME }}
           key: ${{ secrets.DIDDEN_SSH_KEY }}
           port: ${{ secrets.DIDDEN_SSH_PORT }}
+          run: |
+            cd /
+            ls -al
+          
       
-      - run: |
-          cd /
-          ls -al
       #- run: npm ci
       #- run: npm run build --if-present &
