@@ -25,7 +25,9 @@ jobs:
       
       - run: |
           pwd
-          cd /
+          cd /app/didden_Front_Web/didden
           pwd
           npm ci
-      - run: npm run build --if-present &
+      - run: |
+          cd /app/didden_Front_Web/didden
+          npm run build --if-present &
