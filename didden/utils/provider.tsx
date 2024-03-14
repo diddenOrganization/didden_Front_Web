@@ -2,18 +2,11 @@
 
 import React from 'react';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
-import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-function Providers({ children }: React.PropsWithChildren) {
-  const [client] = React.useState(new QueryClient());
+function Provider({ children }: { children: React.ReactNode }) {
+  const [queryClient] = React.useState(new QueryClient({ defaultOptions: { queries: { staleTime: 5000 } } }));
 
-  return (
-    <QueryClientProvider client={client}>
-      <ReactQueryStreamedHydration>{children}</ReactQueryStreamedHydration>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
-  );
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }
 
-export default Providers;
+export default Provider;

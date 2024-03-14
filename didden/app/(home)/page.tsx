@@ -1,44 +1,84 @@
-import { Metadata } from 'next';
-// import { useInfiniteQuery } from '@tanstack/react-query';
-// import { Fragment } from 'react';
+'use client';
 
-import { MovieInfo, MovieInfoResponse } from '../../types/model/movie/MovieInfoResponse';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { Spinner } from 'flowbite-react';
 
+import { MovieInfo } from '@/types/model/movie/MovieInfoResponse';
 import Movie from '@/components/movie';
 
-export const metadata: Metadata = {
-  title: 'Home',
+const API_KEY = process.env.movieApiKey;
+
+const getMovies = async ({ pageParam }: { pageParam: number }) => {
+  const res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&page=${pageParam}`);
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  return await res.json();
 };
 
-export const API_KEY = 'c62ed3cccb5e58994a64922b82ca8880';
+export default function HomePage() {
+  const { ref, inView } = useInView();
 
-const getMovies = async () => {
-  return await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`).then((response) =>
-    response.json(),
-  );
-};
+  const {
+    data: movies,
+    status,
+    fetchStatus,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
+    queryKey: ['movies'],
+    queryFn: getMovies,
+    initialPageParam: 1,
+    getNextPageParam: (page) => {
+      const lastPage = page.total_pages;
+      const currentPage = page.page;
+      if (currentPage > lastPage) {
+        return false;
+      }
 
-export default async function HomePage() {
-  // const { data, status } = useInfiniteQuery({
-  //   queryKey: ['movies'],
-  //   queryFn: getMovies,
-  //   initialPageParam: 1,
-  //   getNextPageParam: (lastPage) => lastPage.nextCursor,
-  // });
+      return currentPage + 1;
+    },
+  });
 
-  const movies: MovieInfoResponse = await getMovies();
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, fetchNextPage, hasNextPage]);
 
   return (
-    <div className="margincenter grid w-full max-w-[90%] grid-cols-5 gap-25 pb-50 pt-150 text-18">
-      {/* {status === 'success' &&
-        data.pages.map((movie: MovieInfo, index: number) => (
-          <Fragment key={index}>
-            <Movie key={movie.id} id={movie.id} title={movie.title} poster_path={movie.poster_path} />
-          </Fragment>
-        ))} */}
-      {movies.results.map((movie: MovieInfo) => (
-        <Movie key={movie.id} id={movie.id} title={movie.title} poster_path={movie.poster_path} />
-      ))}
-    </div>
+    <>
+      {status === 'success' && (
+        <main className="flex min-h-screen flex-col items-center justify-between p-24 md:pt-50">
+          <div className="m-auto mb-5 mt-5 flex w-full grid-cols-1 flex-col gap-4 md:grid md:w-10/12 md:grid-cols-4 md:items-center">
+            {movies?.pages?.map((page) =>
+              page.results.map((movie: MovieInfo, index: number) => {
+                if (page.results.length === index + 1) {
+                  return (
+                    <Movie
+                      key={index}
+                      id={movie.id}
+                      title={movie.title}
+                      poster_path={movie.poster_path}
+                      innerRef={ref}
+                    />
+                  );
+                } else {
+                  return <Movie key={index} id={movie.id} title={movie.title} poster_path={movie.poster_path} />;
+                }
+              }),
+            )}
+          </div>
+        </main>
+      )}
+      {(status === 'pending' || fetchStatus === 'fetching') && (
+        <div className="fixed left-1/2 top-1/2 z-[9999] text-center">
+          <Spinner color="purple" aria-label="Loading" size="xl" theme={{ size: { xl: 'w-50 h-50' } }} />
+        </div>
+      )}
+    </>
   );
 }
