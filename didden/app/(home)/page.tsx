@@ -7,7 +7,6 @@ import { Spinner } from 'flowbite-react';
 
 import { MovieInfo } from '@/types/model/movie/MovieInfoResponse';
 import Movie from '@/components/movie';
-import { MovieInfo, MovieInfoResponse } from '@/types/model/movie/MovieInfoResponse';
 
 const API_KEY = process.env.movieApiKey;
 
