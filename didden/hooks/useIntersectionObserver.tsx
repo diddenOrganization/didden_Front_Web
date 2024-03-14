@@ -1,5 +1,14 @@
 import React from 'react';
 
+interface useIntersectionObserverProps {
+  root?: any;
+  rootMargin?: string;
+  threshold?: number;
+  target: any;
+  onIntersect: any;
+  enabled: boolean;
+}
+
 export default function useIntersectionObserver({
   root,
   target,
@@ -7,7 +16,7 @@ export default function useIntersectionObserver({
   threshold = 1.0,
   rootMargin = '0px',
   enabled = true,
-}) {
+}: useIntersectionObserverProps) {
   React.useEffect(() => {
     if (!enabled) {
       return;
