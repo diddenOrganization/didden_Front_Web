@@ -1,6 +1,6 @@
 'use client';
 
-import { CustomFlowbiteTheme, Navbar } from 'flowbite-react';
+import { Avatar, CustomFlowbiteTheme, Navbar } from 'flowbite-react';
 import { usePathname, useRouter } from 'next/navigation';
 
 const customNavbarTheme: CustomFlowbiteTheme['navbar'] = {
@@ -12,24 +12,39 @@ const customNavbarTheme: CustomFlowbiteTheme['navbar'] = {
   },
 };
 
+const customAvatarTheme: CustomFlowbiteTheme['avatar'] = {
+  root: {
+    size: {
+      md: 'size-25',
+    },
+  },
+};
+
 export default function Navigation() {
   const path = usePathname();
   const router = useRouter();
+
+  const clickAvatar = () => {
+    router.push('/my-page');
+  };
 
   return (
     <>
       <Navbar fluid={true} rounded={true}>
         <Navbar.Brand>
-          <img src="/Image/didden-clear.png" className="mr-3 h-20 sm:h-20" alt=".didden" onClick={router.back} />
-          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">.Didden</span>
+          <img src="/Image/d-clear.png" className="mr-3 h-20 sm:h-20" alt=".didden" onClick={router.back} />
+          {/* <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">.didden</span> */}
         </Navbar.Brand>
-        <Navbar.Toggle theme={{ icon: 'w-20 h-20' }} />
+        <div className="flex md:order-2">
+          <Navbar.Toggle theme={{ icon: 'size-20' }} />
+          <Avatar rounded className="ml-3" size="md" theme={customAvatarTheme} onClick={clickAvatar} />
+        </div>
         <Navbar.Collapse>
           <Navbar.Link href="/" active={path === '/'} className="py-5" theme={customNavbarTheme?.link}>
-            Movies
+            Home
           </Navbar.Link>
-          <Navbar.Link href="/pokemon" active={path === '/pokemon'} className="py-5" theme={customNavbarTheme?.link}>
-            Pokemon
+          <Navbar.Link href="/movies" active={path === '/movies'} className="py-5" theme={customNavbarTheme?.link}>
+            Movies
           </Navbar.Link>
         </Navbar.Collapse>
       </Navbar>
