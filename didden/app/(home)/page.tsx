@@ -1,15 +1,17 @@
-'use client';
+import { Carousel, CustomFlowbiteTheme } from 'flowbite-react';
 
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
-import { useInView } from 'react-intersection-observer';
-import { Spinner } from 'flowbite-react';
+import { ImageInfo } from '@/types/model/image/ImagenfoResponse';
 
-import Tour from '@/components/tour';
-import { TourInfo } from '@/types/model/tour/TourInfoResponse';
+const customCarouselTheme: CustomFlowbiteTheme['carousel'] = {
+  control: {
+    base: 'inline-flex h-30 w-30 items-center justify-center rounded-full bg-white/30 group-hover:bg-gray-200 group-focus:outline-none group-focus:ring-4 group-focus:ring-white dark:bg-gray-800/30 dark:group-hover:bg-gray-800/60 dark:group-focus:ring-gray-800/70 sm:h-32 sm:w-32 md:bg-gray-300',
+    icon: 'h-30 w-30 text-white dark:text-gray-800 sm:h-32 sm:w-32',
+  },
+};
 
-const getTourList = async ({ pageParam }: { pageParam: number }) => {
-  const res = await fetch(`${process.env.tourApiUrl}/api/v1/tour/search?page=${pageParam}&size=20`);
+const getImageList = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  const res = await fetch(`${process.env.tourApiUrl}/main/content/images`);
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
@@ -19,77 +21,21 @@ const getTourList = async ({ pageParam }: { pageParam: number }) => {
   return data;
 };
 
-export default function HomePage() {
-  const { ref, inView } = useInView();
-
-  const {
-    data: tourList,
-    status,
-    fetchStatus,
-    fetchNextPage,
-    hasNextPage,
-  } = useInfiniteQuery({
-    queryKey: ['tourList'],
-    queryFn: getTourList,
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) => {
-      const initialPage = allPages.length - 1;
-      const nextPage = lastPage.length === 20 ? initialPage + 1 : undefined;
-      return nextPage;
-    },
-  });
-
-  useEffect(() => {
-    if (inView && hasNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, fetchNextPage, hasNextPage]);
+export default async function HomePage() {
+  const imageList = await getImageList();
 
   return (
-    <>
-      {status === 'success' && (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24 md:pt-50">
-          <div className="m-auto mb-5 mt-5 flex w-full grid-cols-1 flex-col gap-12 md:grid md:w-10/12 md:grid-cols-4 md:items-center">
-            {tourList?.pages?.map((page) =>
-              page.map((tour: TourInfo, index: number) => {
-                if (page.length === index + 1) {
-                  return (
-                    <Tour
-                      key={index}
-                      contentId={tour.contentId}
-                      title={tour.title}
-                      highCode={tour.highCode}
-                      middleCode={tour.middleCode}
-                      serviceCode={tour.serviceCode}
-                      address={tour.address}
-                      detailImage={tour.detailImage}
-                      innerRef={ref}
-                    />
-                  );
-                } else {
-                  return (
-                    <Tour
-                      key={index}
-                      contentId={tour.contentId}
-                      title={tour.title}
-                      highCode={tour.highCode}
-                      middleCode={tour.middleCode}
-                      serviceCode={tour.serviceCode}
-                      address={tour.address}
-                      detailImage={tour.detailImage}
-                    />
-                  );
-                }
-              }),
-            )}
-          </div>
-        </main>
-      )}
-      {(status === 'pending' || fetchStatus === 'fetching') && (
-        <div className="fixed left-1/2 top-1/2 z-[9999] text-center">
-          <Spinner color="purple" aria-label="Loading" size="xl" theme={{ size: { xl: 'size-50' } }} />
-        </div>
-      )}
-    </>
+    <div className="mt-140 grid h-600 grid-cols-1 md:mx-20 md:mt-80">
+      <Carousel slideInterval={5000} theme={customCarouselTheme}>
+        {imageList?.map((image: ImageInfo) => (
+          <img
+            className="h-full w-full rounded-5 object-cover md:object-scale-down"
+            src={image.contentImageUri}
+            alt={image.contentId}
+            key={image.contentId}
+          />
+        ))}
+      </Carousel>
+    </div>
   );
 }

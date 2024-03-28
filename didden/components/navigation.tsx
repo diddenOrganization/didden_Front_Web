@@ -24,27 +24,29 @@ export default function Navigation() {
   const path = usePathname();
   const router = useRouter();
 
-  const clickAvatar = () => {
-    router.push('/my-page');
-  };
-
   return (
     <>
       <Navbar fluid={true} rounded={true}>
         <Navbar.Brand>
-          <img src="/Image/d-clear.png" className="mr-3 h-20 sm:h-20" alt=".didden" onClick={router.back} />
+          <img src="/Image/d-clear.png" className="mr-3 h-20 sm:h-20" alt=".didden" onClick={() => router.push('/')} />
           {/* <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">.didden</span> */}
         </Navbar.Brand>
         <div className="flex md:order-2">
           <Navbar.Toggle theme={{ icon: 'size-20' }} />
-          <Avatar rounded className="ml-3" size="md" theme={customAvatarTheme} onClick={clickAvatar} />
+          <Avatar
+            rounded
+            className="ml-3"
+            size="md"
+            theme={customAvatarTheme}
+            onClick={() => router.push('/my-page')}
+          />
         </div>
         <Navbar.Collapse>
           <Navbar.Link href="/" active={path === '/'} className="py-5" theme={customNavbarTheme?.link}>
             Home
           </Navbar.Link>
-          <Navbar.Link href="/movies" active={path === '/movies'} className="py-5" theme={customNavbarTheme?.link}>
-            Movies
+          <Navbar.Link href="/tour" active={path === '/tour'} className="py-5" theme={customNavbarTheme?.link}>
+            Tour
           </Navbar.Link>
         </Navbar.Collapse>
       </Navbar>

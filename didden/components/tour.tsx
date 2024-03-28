@@ -55,7 +55,7 @@ const Tour: React.FC<TourInfoProps> = ({ contentId, title, highCode, middleCode,
           >
             <div className="flex">
               <div className="w-[-webkit-fill-available] overflow-hidden text-ellipsis whitespace-pre text-left font-semibold">
-                {title}
+                {title.length > 25 ? title.slice(0, 23) + '...' : title}
               </div>
               <div className="ml-auto flex gap-5">
                 <Badge color="purple" size="sm" theme={customBageTheme}>
