@@ -23,10 +23,18 @@ interface TourInfoProps extends TourInfo {
   innerRef?: (node?: Element | null | undefined) => void;
 }
 
-const Tour: React.FC<TourInfoProps> = ({ contentId, title, highCode, middleCode, detailImage, innerRef }) => {
+const Tour: React.FC<TourInfoProps> = ({
+  contentId,
+  title,
+  highCode,
+  middleCode,
+  detailImage,
+  innerRef,
+  serviceCode,
+}) => {
   const router = useRouter();
   const clickImage = () => {
-    router.push(`/tour/${contentId}`);
+    router.push(`/tour/${contentId}/${serviceCode}`);
   };
 
   return (
