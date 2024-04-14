@@ -11,7 +11,9 @@ export default function shoppingDetail({ detail }: any) {
         <p>입실시간 : {detail?.checkintime}</p>
         <p>퇴실시간 : {detail?.checkouttime}</p>
         <p>주차시설 : {detail?.parkinglodging}</p>
-        <p>예약안내홈페이지 : {detail?.reservationurl}</p>
+        <p>
+          예약안내홈페이지 : <span dangerouslySetInnerHTML={{ __html: detail?.reservationurl }} />
+        </p>
         <p>부대시설 : {detail?.subfacility}</p>
       </div>
     </React.Fragment>
