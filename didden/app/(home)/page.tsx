@@ -25,11 +25,11 @@ export default async function HomePage() {
   const imageList = await getImageList();
 
   return (
-    <div className="mt-140 grid h-600 grid-cols-1 md:mx-20 md:mt-80">
+    <div className="grid h-900 grid-cols-1 md:mx-20 md:h-740">
       <Carousel slideInterval={5000} theme={customCarouselTheme}>
         {imageList?.map((image: ImageInfo) => (
           <img
-            className="h-full w-full rounded-5 object-cover md:object-scale-down"
+            className="h-full w-full object-cover md:object-scale-down md:selection:rounded-5"
             src={image.contentImageUri}
             alt={image.contentId}
             key={image.contentId}
