@@ -24,7 +24,7 @@ const customTextInputTheme: CustomFlowbiteTheme['textInput'] = {
 };
 
 const getHighCodeList = async () => {
-  const res = await fetch(`${process.env.tourApiUrl}/api/v1/tour/high-code`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_TOUR_API_URL}/api/v1/tour/high-code`);
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
@@ -35,7 +35,7 @@ const getHighCodeList = async () => {
 };
 
 const getMiddleCodeList = async () => {
-  const res = await fetch(`${process.env.tourApiUrl}/api/v1/tour/middle-code`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_TOUR_API_URL}/api/v1/tour/middle-code`);
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
@@ -54,9 +54,17 @@ const getTourList = async ({
   middleCodes: string;
   pageParam: number;
 }) => {
-  const res = await fetch(
-    `${process.env.tourApiUrl}/api/v1/tour/search?page=${pageParam}&size=20&keyword=${keyword}&optServiceMiddleCodes=${middleCodes}`,
-  );
+  const url = `${process.env.NEXT_PUBLIC_TOUR_API_URL}/api/v1/tour/search?`;
+  const params = new URLSearchParams();
+  params.append('page', String(pageParam));
+  params.append('size', '20');
+  if (keyword) {
+    params.append('keyword', keyword);
+  }
+  if (middleCodes) {
+    params.append('optServiceMiddleCodes', middleCodes);
+  }
+  const res = await fetch(url + params.toString());
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }

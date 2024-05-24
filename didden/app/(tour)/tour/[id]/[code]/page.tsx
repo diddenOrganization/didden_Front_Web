@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import Detail from '@/components/tourdetail';
 
 const getTourDetail = async ({ id, code }: { id: string; code: string }) => {
-  const res = await fetch(`${process.env.tourApiUrl}/api/v1/tour/${code}/content-type/${id}/details`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_TOUR_API_URL}/api/v1/tour/${code}/content-type/${id}/details`);
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }

@@ -35,7 +35,7 @@ export default function Navigation() {
           <Navbar.Toggle theme={{ icon: 'size-20' }} />
           <Avatar
             rounded
-            className="ml-3"
+            className="ml-3 cursor-pointer"
             size="md"
             theme={customAvatarTheme}
             onClick={() => router.push('/my-page')}

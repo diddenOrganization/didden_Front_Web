@@ -1,3 +1,5 @@
+import flowbite from 'flowbite-react/tailwind';
+
 import type { Config } from 'tailwindcss';
 
 const range = (start: number, end: number) => {
@@ -13,10 +15,10 @@ const makeNum = () =>
 
 const config: Config = {
   content: [
-    './node_modules/flowbite-react/lib/**/*.js',
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
+    flowbite.content(),
   ],
   theme: {
     extend: {
@@ -31,6 +33,6 @@ const config: Config = {
       borderSpacing: makeNum(),
     },
   },
-  plugins: [require('flowbite/plugin')],
+  plugins: [flowbite.plugin()],
 };
 export default config;

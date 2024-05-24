@@ -1,5 +1,5 @@
 import { Inter } from 'next/font/google';
-// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import Navigation from '@/components/navigation';
 import Provider from '@/utils/provider';
@@ -26,7 +26,7 @@ export default function RootLayout({
         <Provider>
           <Navigation />
           {children}
-          {/* <ReactQueryDevtools /> */}
+          {process.env.NODE_ENV === 'development' && <ReactQueryDevtools />}
         </Provider>
       </body>
     </html>

@@ -1,6 +1,6 @@
 import { Carousel, CustomFlowbiteTheme } from 'flowbite-react';
 
-import { ImageInfo } from '@/types/model/image/ImagenfoResponse';
+import { ImageInfo } from '@/types/model/image/ImageInfoResponse';
 
 const customCarouselTheme: CustomFlowbiteTheme['carousel'] = {
   control: {
@@ -10,8 +10,8 @@ const customCarouselTheme: CustomFlowbiteTheme['carousel'] = {
 };
 
 const getImageList = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  const res = await fetch(`${process.env.tourApiUrl}/main/content/images`);
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  const res = await fetch(`${process.env.NEXT_PUBLIC_TOUR_API_URL}/main/content/images`);
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
