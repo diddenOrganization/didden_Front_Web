@@ -9,4 +9,5 @@ export interface TourInfo {
   serviceCode: string;
   address: string;
   detailImage?: string;
+  
 }
