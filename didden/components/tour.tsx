@@ -17,7 +17,7 @@ const customBageTheme: CustomFlowbiteTheme['badge'] = {
     },
   },
 };
-
+ 
 interface TourInfoProps extends TourInfo {
   // eslint-disable-next-line no-unused-vars
   innerRef?: (node?: Element | null | undefined) => void;
