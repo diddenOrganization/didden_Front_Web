@@ -7,8 +7,7 @@ import { Badge, CustomFlowbiteTheme } from 'flowbite-react';
 
 import { HighCodeTypeToText } from '@/types/const-objects/HighCodeType';
 import { MiddleCodeTypeToText } from '@/types/const-objects/MiddleCodeType';
-
-import { TourInfo } from '../types/model/tour/TourInfoResponse';
+import { TourInfo } from '@/types/model/tour/TourInfoResponse';
 
 const customBageTheme: CustomFlowbiteTheme['badge'] = {
   root: {
@@ -17,7 +16,7 @@ const customBageTheme: CustomFlowbiteTheme['badge'] = {
     },
   },
 };
- 
+
 interface TourInfoProps extends TourInfo {
   // eslint-disable-next-line no-unused-vars
   innerRef?: (node?: Element | null | undefined) => void;
