@@ -5,10 +5,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Badge, CustomFlowbiteTheme } from 'flowbite-react';
 
-import { TourInfo } from '../types/model/tour/TourInfoResponse';
-
 import { HighCodeTypeToText } from '@/types/const-objects/HighCodeType';
 import { MiddleCodeTypeToText } from '@/types/const-objects/MiddleCodeType';
+
+import { TourInfo } from '../types/model/tour/TourInfoResponse';
 
 const customBageTheme: CustomFlowbiteTheme['badge'] = {
   root: {
